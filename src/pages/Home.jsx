@@ -7,6 +7,7 @@ const SPECIAL_OBJECTS = [
     { type: 'box', min: new THREE.Vector3(9.6, 0, -1.2), max: new THREE.Vector3(11.7, 1, -0.5), info: "MagicTree", link: "www.google.com", position_info: new THREE.Vector3(12, 0, -1), radius_info: 4 },
     { type: 'circle', position: new THREE.Vector3(0, 0, 7), radius: 0.5, info: "Rock", link: "www.google.com", position_info: new THREE.Vector3(0, 0, 7), radius_info: 4 },
     { type: 'circle', position: new THREE.Vector3(7, -0.1, 8), radius: 1.5, info: "Mountain", link: "www.google.com", position_info: new THREE.Vector3(7, 0, 8), radius_info: 4 },
+    { type: 'circle', position: new THREE.Vector3(10, -0.1, -10), radius: 3, info: "Snake Dungeon", link: "www.google.com", position_info: new THREE.Vector3(7.5, 0, -10.5), radius_info: 4 },
     { type: 'box', min: new THREE.Vector3(-12, 0, -12), max: new THREE.Vector3(12, 1, -11), info: "Fence", link: "www.google.com", position_info: new THREE.Vector3(12, 0, 0), radius_info: 1 },
     { type: 'box', min: new THREE.Vector3(-12, 0, 11), max: new THREE.Vector3(12, 1, 12), info: "Fence", link: "www.google.com", position_info: new THREE.Vector3(12, 0, 0), radius_info: 1 },
     { type: 'box', min: new THREE.Vector3(11, 0, -12), max: new THREE.Vector3(12, 1, 12), info: "Fence", link: "www.google.com", position_info: new THREE.Vector3(12, 0, 0), radius_info: 1 },

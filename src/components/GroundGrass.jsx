@@ -1,14 +1,16 @@
 import React, { useEffect, useRef, useState } from 'react'
-import Mountain from './Mountain';
-import Grass from './Grass';
 import DarkGrass from './DarkGrass';
 import Trees from './Trees';
 import Fox from './Fox';
 import MagicTree from './MagicTree';
 import InfoBox from './InfoBox';
-import * as THREE from 'three';
 import Rock from './Rock';
 import Waterfall from './Waterfall';
+import Wolf from './Wolf';
+import Butterfly from './Butterfly';
+import MonsterInn from './MonsterInn';
+import SandKing from './SandKing';
+import Snake1 from './Snake1';
 
 // Debug mode toggle
 const DEBUG_COLLISION = true;
@@ -152,7 +154,8 @@ const GroundGrass = ({ SPECIAL_OBJECTS, setFoxLocation, infoBoxesStates, setInfo
             <MagicTree position={[9, 0, 0]} scale={0.005} rotation={[0, 0, 0]} />
             <Rock position={[0, 0, 7]} scale={0.15} rotation={[0, 0, 0]} />
             <Waterfall position={[7, -0.1, 8]} scale={0.08} rotation={[0, 0, 0.1]} />
-
+            <MonsterInn position={[0, 0.5, -3]} scale={0.005} rotation={[0, 0, 0]} />
+            <SandKing position={[10, 0.2, -10]} scale={0.8} rotation={[0, -Math.PI / 4, 0]} />
             {/* Trees scattered around the land */}
             {[
                 [15, 0, 10], [-12, 0, 8], [8, 0, -15], [-10, 0, -12],
@@ -183,6 +186,10 @@ const GroundGrass = ({ SPECIAL_OBJECTS, setFoxLocation, infoBoxesStates, setInfo
             )}
 
             <Fox debug={true} position={[0, 0.25, 0]} scale={0.05} rotation={[0, 0, 0]} SPECIAL_OBJECTS={SPECIAL_OBJECTS} setFoxLocation={setFoxLocation} />
+            <Wolf position={[5, 0.1, 8]} scale={0.015} rotation={[0, Math.PI / 3, 0]} />
+            <Butterfly position={[10, 0.8, -1]} scale={0.15} rotation={[0, -Math.PI / 6, 0]} />
+            <Snake1 position={[9.2, 0.15, -9.2]} scale={0.02} rotation={[0, -Math.PI / 4 * 3, 0]} />
+
 
             {/* InfoBox components - positioned relative to the scene */}
             {SPECIAL_OBJECTS.map((obj, index) => (
