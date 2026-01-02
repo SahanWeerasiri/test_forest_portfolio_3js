@@ -14,6 +14,7 @@ import Snake1 from './Snake1';
 import Gem from './Gem';
 import Snake2 from './Snake2';
 import Luna from './Luna';
+import DragonCave from './DragonCave';
 
 // Debug mode toggle
 const DEBUG_COLLISION = true;
@@ -157,9 +158,10 @@ const GroundGrass = ({ SPECIAL_OBJECTS, setFoxLocation, infoBoxesStates, setInfo
             <MagicTree position={[9, 0, 0]} scale={0.005} rotation={[0, 0, 0]} />
             <Rock position={[0, 0, 7]} scale={0.15} rotation={[0, 0, 0]} />
             <Waterfall position={[7, -0.1, 8]} scale={0.08} rotation={[0, 0, 0.1]} />
-            <MonsterInn position={[0, 0.5, -3]} scale={0.005} rotation={[0, 0, 0]} />
+            <MonsterInn position={[-7, 0.15, 9.5]} scale={0.007} rotation={[0, Math.PI / 6 * 5, 0]} />
             <SandKing position={[10, 0.2, -10]} scale={0.8} rotation={[0, -Math.PI / 4, 0]} />
             <Gem position={[-10, 0.5, -10]} scale={0.2} rotation={[0, Math.PI / 4, 0]} />
+            <DragonCave position={[-9, 0.4, 9]} scale={0.3} rotation={[0, -Math.PI / 4, 0]} />
             {/* Trees scattered around the land */}
             {[
                 [15, 0, 10], [-12, 0, 8], [8, 0, -15], [-10, 0, -12],
@@ -168,7 +170,7 @@ const GroundGrass = ({ SPECIAL_OBJECTS, setFoxLocation, infoBoxesStates, setInfo
                 [3, 0, -25], [-25, 0, 5], [18, 0, 22], [-22, 0, 18],
                 [25, 0, -12], [-16, 0, 25], [14, 0, -18], [-14, 0, 20],
                 [30, 0, 0], [-30, 0, 0], [0, 0, 30], [0, 0, -30],
-                [25, 0, 25], [-25, 0, -25], [25, 0, -25], [-25, 0, 25]
+                [25, 0, 25], [-25, 0, -25], [25, 0, -25],
             ].map((pos, i) => (
                 <Trees
                     key={i}
