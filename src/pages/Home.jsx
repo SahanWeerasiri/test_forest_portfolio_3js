@@ -8,6 +8,7 @@ const SPECIAL_OBJECTS = [
     { type: 'circle', position: new THREE.Vector3(0, 0, 7), radius: 0.5, info: "Rock", link: "www.google.com", position_info: new THREE.Vector3(0, 0, 7), radius_info: 4 },
     { type: 'circle', position: new THREE.Vector3(7, -0.1, 8), radius: 1.5, info: "Mountain", link: "www.google.com", position_info: new THREE.Vector3(7, 0, 8), radius_info: 4 },
     { type: 'circle', position: new THREE.Vector3(10, -0.1, -10), radius: 3, info: "Snake Dungeon", link: "www.google.com", position_info: new THREE.Vector3(7.5, 0, -10.5), radius_info: 4 },
+    { type: 'circle', position: new THREE.Vector3(-9, 0.2, 0), radius: 1, info: "Luna's Place", link: "www.google.com", position_info: new THREE.Vector3(-8.5, 0.2, 1), radius_info: 4 },
     { type: 'box', min: new THREE.Vector3(-12, 0, -12), max: new THREE.Vector3(12, 1, -11), info: "Fence", link: "www.google.com", position_info: new THREE.Vector3(12, 0, 0), radius_info: 1 },
     { type: 'box', min: new THREE.Vector3(-12, 0, 11), max: new THREE.Vector3(12, 1, 12), info: "Fence", link: "www.google.com", position_info: new THREE.Vector3(12, 0, 0), radius_info: 1 },
     { type: 'box', min: new THREE.Vector3(11, 0, -12), max: new THREE.Vector3(12, 1, 12), info: "Fence", link: "www.google.com", position_info: new THREE.Vector3(12, 0, 0), radius_info: 1 },
@@ -41,7 +42,7 @@ const Home = () => {
             <Canvas
                 camera={{
                     near: 0.1,
-                    far: 13, // Increased far plane
+                    far: 50, // Increased far plane
                     position: [0, 10, 20] // Optional: Set a better camera position
                 }}
                 style={{ display: 'block' }}

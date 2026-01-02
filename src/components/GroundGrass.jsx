@@ -16,9 +16,10 @@ import Snake2 from './Snake2';
 import Luna from './Luna';
 import DragonCave from './DragonCave';
 import Griffin from './Griffin';
+import Chakra from './Chakra';
 
 // Debug mode toggle
-const DEBUG_COLLISION = true;
+const DEBUG_COLLISION = false;
 
 const GroundGrass = ({ SPECIAL_OBJECTS, setFoxLocation, infoBoxesStates, setInfoBoxesStates, ...props }) => {
     const landRef = useRef();
@@ -36,23 +37,23 @@ const GroundGrass = ({ SPECIAL_OBJECTS, setFoxLocation, infoBoxesStates, setInfo
         const x = -fenceRadius + (i * (fenceRadius * 2 / (fenceCount - 1)));
         fencePositions.push([x, 0, -fenceRadius]); // top
         fencePositions.push([x, 0, fenceRadius]); // bottom
-        fenceAdditionalPositions.push([x, 0, -fenceRadius - 1]); // top additional
-        fenceAdditionalPositions.push([x, 0, fenceRadius + 1]); // bottom additional
+        fenceAdditionalPositions.push([x, 0, -fenceRadius - 1.5]); // top additional
+        fenceAdditionalPositions.push([x, 0, fenceRadius + 1.5]); // bottom additional
     }
     // Left and right
     for (let i = 1; i < fenceCount - 1; i++) {
         const z = -fenceRadius + (i * (fenceRadius * 2 / (fenceCount - 1)));
         fencePositions.push([-fenceRadius, 0, z]); // left
         fencePositions.push([fenceRadius, 0, z]); // right
-        fenceAdditionalPositions.push([-fenceRadius - 1, 0, z]); // left additional
-        fenceAdditionalPositions.push([fenceRadius + 1, 0, z]); // right additional
+        fenceAdditionalPositions.push([-fenceRadius - 1.5, 0, z]); // left additional
+        fenceAdditionalPositions.push([fenceRadius + 1.5, 0, z]); // right additional
     }
 
     // add additional corner trees
-    fenceAdditionalPositions.push([-fenceRadius - 1, 0, -fenceRadius - 1]);
-    fenceAdditionalPositions.push([fenceRadius + 1, 0, -fenceRadius - 1]);
-    fenceAdditionalPositions.push([-fenceRadius - 1, 0, fenceRadius + 1]);
-    fenceAdditionalPositions.push([fenceRadius + 1, 0, fenceRadius + 1]);
+    fenceAdditionalPositions.push([-fenceRadius - 1.3, 0, -fenceRadius - 1]);
+    fenceAdditionalPositions.push([fenceRadius + 1.3, 0, -fenceRadius - 1]);
+    fenceAdditionalPositions.push([-fenceRadius - 1.3, 0, fenceRadius + 1]);
+    fenceAdditionalPositions.push([fenceRadius + 1.3, 0, fenceRadius + 1]);
 
     const handlePointerDown = (e) => {
         setIsDragging(true);
@@ -74,7 +75,7 @@ const GroundGrass = ({ SPECIAL_OBJECTS, setFoxLocation, infoBoxesStates, setInfo
             const newYRotation = landRef.current.rotation.y + deltaX * sensitivity;
             landRef.current.rotation.y = newYRotation;
             const newXRotation = landRef.current.rotation.x + deltaY * sensitivity;
-            if (0.5 < newXRotation && newXRotation < 1.5) {
+            if (0.15 < newXRotation && newXRotation < 1.1) {
                 landRef.current.rotation.x = newXRotation;
             }
         }
@@ -152,7 +153,7 @@ const GroundGrass = ({ SPECIAL_OBJECTS, setFoxLocation, infoBoxesStates, setInfo
                 <Trees
                     key={`fence-tree-additional-${i}`}
                     position={pos}
-                    scale={0.01}
+                    scale={0.02}
                     rotation={[0, 0, 0]}
                 />
             ))}
@@ -163,6 +164,7 @@ const GroundGrass = ({ SPECIAL_OBJECTS, setFoxLocation, infoBoxesStates, setInfo
             <SandKing position={[10, 0.2, -10]} scale={0.8} rotation={[0, -Math.PI / 4, 0]} />
             <Gem position={[-10, 0.5, -10]} scale={0.2} rotation={[0, Math.PI / 4, 0]} />
             <DragonCave position={[-9, 0.4, 9]} scale={0.3} rotation={[0, -Math.PI / 4, 0]} />
+            <Chakra position={[-9, 0.2, 0]} scale={0.5} rotation={[0, 0, 0]} />
             {/* Trees scattered around the land */}
             {[
                 [15, 0, 10], [-12, 0, 8], [8, 0, -15], [-10, 0, -12],
@@ -171,7 +173,7 @@ const GroundGrass = ({ SPECIAL_OBJECTS, setFoxLocation, infoBoxesStates, setInfo
                 [3, 0, -25], [-25, 0, 5], [18, 0, 22], [-22, 0, 18],
                 [25, 0, -12], [-16, 0, 25], [14, 0, -18], [-14, 0, 20],
                 [30, 0, 0], [-30, 0, 0], [0, 0, 30], [0, 0, -30],
-                [25, 0, 25], [-25, 0, -25], [25, 0, -25],
+                [25, 0, 25], [-25, 0, -25],
             ].map((pos, i) => (
                 <Trees
                     key={i}
