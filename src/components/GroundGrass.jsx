@@ -11,6 +11,8 @@ import Butterfly from './Butterfly';
 import MonsterInn from './MonsterInn';
 import SandKing from './SandKing';
 import Snake1 from './Snake1';
+import Gem from './Gem';
+import Snake2 from './Snake2';
 
 // Debug mode toggle
 const DEBUG_COLLISION = true;
@@ -156,6 +158,7 @@ const GroundGrass = ({ SPECIAL_OBJECTS, setFoxLocation, infoBoxesStates, setInfo
             <Waterfall position={[7, -0.1, 8]} scale={0.08} rotation={[0, 0, 0.1]} />
             <MonsterInn position={[0, 0.5, -3]} scale={0.005} rotation={[0, 0, 0]} />
             <SandKing position={[10, 0.2, -10]} scale={0.8} rotation={[0, -Math.PI / 4, 0]} />
+            <Gem position={[-10, 0.5, -10]} scale={0.2} rotation={[0, Math.PI / 4, 0]} />
             {/* Trees scattered around the land */}
             {[
                 [15, 0, 10], [-12, 0, 8], [8, 0, -15], [-10, 0, -12],
@@ -189,7 +192,7 @@ const GroundGrass = ({ SPECIAL_OBJECTS, setFoxLocation, infoBoxesStates, setInfo
             <Wolf position={[5, 0.1, 8]} scale={0.015} rotation={[0, Math.PI / 3, 0]} />
             <Butterfly position={[10, 0.8, -1]} scale={0.15} rotation={[0, -Math.PI / 6, 0]} />
             <Snake1 position={[9.2, 0.15, -9.2]} scale={0.02} rotation={[0, -Math.PI / 4 * 3, 0]} />
-
+            <Snake2 position={[-9.8, 0.6, -9.8]} scale={0.35} rotation={[0, -Math.PI / 4, 0]} />
 
             {/* InfoBox components - positioned relative to the scene */}
             {SPECIAL_OBJECTS.map((obj, index) => (
