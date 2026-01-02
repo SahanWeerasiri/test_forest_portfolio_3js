@@ -19,6 +19,23 @@ const GroundGrass = ({ SPECIAL_OBJECTS, setFoxLocation, infoBoxesStates, setInfo
     const [lastX, setLastX] = useState(0);
     const [lastY, setLastY] = useState(0);
     const sensitivity = 0.0001;
+    // Fence tree positions (big and small)
+    const fenceRadius = 12; // half of 15x15
+    const fenceCount = 36; // number of trees per side
+    const fencePositions = [];
+    // Top and bottom
+    for (let i = 0; i < fenceCount; i++) {
+        const x = -fenceRadius + (i * (fenceRadius * 2 / (fenceCount - 1)));
+        fencePositions.push([x, 0, -fenceRadius]); // top
+        fencePositions.push([x, 0, fenceRadius]); // bottom
+    }
+    // Left and right
+    for (let i = 1; i < fenceCount - 1; i++) {
+        const z = -fenceRadius + (i * (fenceRadius * 2 / (fenceCount - 1)));
+        fencePositions.push([-fenceRadius, 0, z]); // left
+        fencePositions.push([fenceRadius, 0, z]); // right
+    }
+
     const handlePointerDown = (e) => {
         setIsDragging(true);
         setLastX(e.clientX);
@@ -103,7 +120,16 @@ const GroundGrass = ({ SPECIAL_OBJECTS, setFoxLocation, infoBoxesStates, setInfo
                 return null;
             })}
 
-            <MagicTree position={[10, 0, 0]} scale={0.005} rotation={[0, 0, 0]} />
+            {/* Fence trees (big and small) */}
+            {fencePositions.map((pos, i) => (
+                <Trees
+                    key={`fence-tree-${i}`}
+                    position={pos}
+                    scale={i % 3 === 0 ? 0.008 : 0.004}
+                    rotation={[0, 0, 0]}
+                />
+            ))}
+            <MagicTree position={[9, 0, 0]} scale={0.005} rotation={[0, 0, 0]} />
             <Rock position={[0, 0, 7]} scale={0.15} rotation={[0, 0, 0]} />
             <Waterfall position={[7, -0.1, 8]} scale={0.08} rotation={[0, 0, 0.1]} />
 
@@ -119,7 +145,7 @@ const GroundGrass = ({ SPECIAL_OBJECTS, setFoxLocation, infoBoxesStates, setInfo
             ].map((pos, i) => (
                 <Trees
                     key={i}
-                    position={pos/3}
+                    position={pos.map(coord => coord / 5)}
                     scale={0.003}
                     rotation={[0, 0, 0]}
                 />

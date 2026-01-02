@@ -5,16 +5,6 @@ import { useThree } from '@react-three/fiber';
 import { useFrame } from '@react-three/fiber';
 import * as THREE from 'three';
 
-// // List of special objects to avoid (positions in world coordinates)
-// const SPECIAL_OBJECTS = [
-//     // Supports both radial (type: 'circle') and rectangular (type: 'box')
-//     // Radial (circle/sphere) collision
-//     // { type: 'circle', position: new THREE.Vector3(10, 0, 0), radius: 1 }, // MagicTree
-//     // Rectangular (box) collision
-//     { type: 'box', min: new THREE.Vector3(10.6, 0, -1.2), max: new THREE.Vector3(12.7, 1, -0.5) },
-//     // Add more objects as needed
-// ];
-
 const Fox = ({ SPECIAL_OBJECTS, setFoxLocation, ...props }) => {
     const { scene, animations } = useGLTF(foxScene);
     const foxRef = useRef();
@@ -142,6 +132,7 @@ const Fox = ({ SPECIAL_OBJECTS, setFoxLocation, ...props }) => {
             window.removeEventListener('keydown', handleKeyDown);
             window.removeEventListener('keyup', handleKeyUp);
         };
+
     }, []); // Remove actions dependency
 
     return (
