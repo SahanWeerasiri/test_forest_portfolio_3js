@@ -13,6 +13,7 @@ import SandKing from './SandKing';
 import Snake1 from './Snake1';
 import Gem from './Gem';
 import Snake2 from './Snake2';
+import Luna from './Luna';
 
 // Debug mode toggle
 const DEBUG_COLLISION = true;
@@ -193,7 +194,7 @@ const GroundGrass = ({ SPECIAL_OBJECTS, setFoxLocation, infoBoxesStates, setInfo
             <Butterfly position={[10, 0.8, -1]} scale={0.15} rotation={[0, -Math.PI / 6, 0]} />
             <Snake1 position={[9.2, 0.15, -9.2]} scale={0.02} rotation={[0, -Math.PI / 4 * 3, 0]} />
             <Snake2 position={[-9.8, 0.6, -9.8]} scale={0.35} rotation={[0, -Math.PI / 4, 0]} />
-
+            <Luna position={[-9, 0.5, 0]} scale={1.2} rotation={[0, Math.PI / 2, 0]} />
             {/* InfoBox components - positioned relative to the scene */}
             {SPECIAL_OBJECTS.map((obj, index) => (
                 <InfoBox
