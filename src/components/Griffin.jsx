@@ -1,5 +1,5 @@
 import React, { useEffect, useRef } from 'react'
-import testScence from '../assets/test/3_headed_gryphon.glb'
+import testScence from '../assets/3_headed_gryphon.glb'
 import { useAnimations, useGLTF } from '@react-three/drei';
 
 const Griffin = ({ ...props }) => {

@@ -1,5 +1,5 @@
 import React, { useEffect, useRef } from 'react'
-import testScence from '../assets/new/icy_dragon.glb'
+import testScence from '../assets/icy_dragon.glb'
 import { useAnimations, useGLTF } from '@react-three/drei';
 
 const MonsterInn = ({ ...props }) => {

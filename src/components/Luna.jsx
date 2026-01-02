@@ -1,5 +1,5 @@
 import React, { useEffect, useRef } from 'react'
-import testScence from '../assets/test/luna_-_minimalistic_fantasy_dragon.glb'
+import testScence from '../assets/luna_-_minimalistic_fantasy_dragon.glb'
 import { useAnimations, useGLTF } from '@react-three/drei';
 
 const Luna = ({ ...props }) => {

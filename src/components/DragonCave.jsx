@@ -1,5 +1,5 @@
 import React, { useEffect, useRef } from 'react'
-import testScence from '../assets/test/dragon_head_cave.glb'
+import testScence from '../assets/dragon_head_cave.glb'
 import { useAnimations, useGLTF } from '@react-three/drei';
 
 const DragonCave = ({ ...props }) => {

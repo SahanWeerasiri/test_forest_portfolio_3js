@@ -1,5 +1,5 @@
 import React, { useEffect, useRef } from 'react'
-import testScence from '../assets/new/fantasy_butterfly_animation.glb'
+import testScence from '../assets/fantasy_butterfly_animation.glb'
 import { useAnimations, useGLTF } from '@react-three/drei';
 
 const Butterfly = ({ ...props }) => {

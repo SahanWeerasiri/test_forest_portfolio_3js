@@ -1,5 +1,5 @@
 import React, { useEffect, useRef } from 'react'
-import testScence from '../assets/test/arch_tree_-_stylized_animated_model.glb'
+import testScence from '../assets/arch_tree_-_stylized_animated_model.glb'
 import { useAnimations, useGLTF } from '@react-three/drei';
 
 const Gem = ({ ...props }) => {

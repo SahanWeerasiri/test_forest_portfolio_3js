@@ -1,5 +1,5 @@
 import React, { useEffect, useRef } from 'react'
-import testScence from '../assets/test/snake.glb'
+import testScence from '../assets/snake.glb'
 import { useAnimations, useGLTF } from '@react-three/drei';
 
 const Snake2 = ({ ...props }) => {

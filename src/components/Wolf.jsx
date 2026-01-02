@@ -1,5 +1,5 @@
 import React, { useEffect, useRef } from 'react'
-import testScence from '../assets/new/fantasy_fox.glb'
+import testScence from '../assets/fantasy_fox.glb'
 import { useAnimations, useGLTF } from '@react-three/drei';
 
 const Wolf = ({ ...props }) => {

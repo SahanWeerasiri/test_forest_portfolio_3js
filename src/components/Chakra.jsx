@@ -1,5 +1,5 @@
 import React, { useEffect, useRef } from 'react'
-import testScence from '../assets/test/chakra.glb'
+import testScence from '../assets/chakra.glb'
 import { useAnimations, useGLTF } from '@react-three/drei';
 
 const Chakra = ({ ...props }) => {
