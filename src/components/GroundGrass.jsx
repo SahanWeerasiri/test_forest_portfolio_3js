@@ -23,18 +23,29 @@ const GroundGrass = ({ SPECIAL_OBJECTS, setFoxLocation, infoBoxesStates, setInfo
     const fenceRadius = 12; // half of 15x15
     const fenceCount = 36; // number of trees per side
     const fencePositions = [];
+    const fenceAdditionalPositions = [];
     // Top and bottom
     for (let i = 0; i < fenceCount; i++) {
         const x = -fenceRadius + (i * (fenceRadius * 2 / (fenceCount - 1)));
         fencePositions.push([x, 0, -fenceRadius]); // top
         fencePositions.push([x, 0, fenceRadius]); // bottom
+        fenceAdditionalPositions.push([x, 0, -fenceRadius - 1]); // top additional
+        fenceAdditionalPositions.push([x, 0, fenceRadius + 1]); // bottom additional
     }
     // Left and right
     for (let i = 1; i < fenceCount - 1; i++) {
         const z = -fenceRadius + (i * (fenceRadius * 2 / (fenceCount - 1)));
         fencePositions.push([-fenceRadius, 0, z]); // left
         fencePositions.push([fenceRadius, 0, z]); // right
+        fenceAdditionalPositions.push([-fenceRadius - 1, 0, z]); // left additional
+        fenceAdditionalPositions.push([fenceRadius + 1, 0, z]); // right additional
     }
+
+    // add additional corner trees
+    fenceAdditionalPositions.push([-fenceRadius - 1, 0, -fenceRadius - 1]);
+    fenceAdditionalPositions.push([fenceRadius + 1, 0, -fenceRadius - 1]);
+    fenceAdditionalPositions.push([-fenceRadius - 1, 0, fenceRadius + 1]);
+    fenceAdditionalPositions.push([fenceRadius + 1, 0, fenceRadius + 1]);
 
     const handlePointerDown = (e) => {
         setIsDragging(true);
@@ -129,6 +140,15 @@ const GroundGrass = ({ SPECIAL_OBJECTS, setFoxLocation, infoBoxesStates, setInfo
                     rotation={[0, 0, 0]}
                 />
             ))}
+            {/*Boundry additional */}
+            {fenceAdditionalPositions.map((pos, i) => (
+                <Trees
+                    key={`fence-tree-additional-${i}`}
+                    position={pos}
+                    scale={0.01}
+                    rotation={[0, 0, 0]}
+                />
+            ))}
             <MagicTree position={[9, 0, 0]} scale={0.005} rotation={[0, 0, 0]} />
             <Rock position={[0, 0, 7]} scale={0.15} rotation={[0, 0, 0]} />
             <Waterfall position={[7, -0.1, 8]} scale={0.08} rotation={[0, 0, 0.1]} />
@@ -145,14 +165,14 @@ const GroundGrass = ({ SPECIAL_OBJECTS, setFoxLocation, infoBoxesStates, setInfo
             ].map((pos, i) => (
                 <Trees
                     key={i}
-                    position={pos.map(coord => coord / 5)}
+                    position={pos.map(coord => coord / 3)}
                     scale={0.003}
                     rotation={[0, 0, 0]}
                 />
             ))}
 
-            {Array.from({ length: 10 }, (_, i) => (i - 3) * 2.4).flatMap(i =>
-                Array.from({ length: 10 }, (_, j) => (j - 2) * 2.4).map(j =>
+            {Array.from({ length: 14 }, (_, i) => (i - 6) * 2.4).flatMap(i =>
+                Array.from({ length: 14 }, (_, j) => (j - 6) * 2.4).map(j =>
                     <DarkGrass
                         key={`${i},${j}`}
                         position={[i, 0.15, j]}

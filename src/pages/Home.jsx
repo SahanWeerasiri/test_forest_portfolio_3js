@@ -40,7 +40,7 @@ const Home = () => {
             <Canvas
                 camera={{
                     near: 0.1,
-                    far: 8, // Increased far plane
+                    far: 13, // Increased far plane
                     position: [0, 10, 20] // Optional: Set a better camera position
                 }}
                 style={{ display: 'block' }}
@@ -56,23 +56,6 @@ const Home = () => {
                     setInfoBoxesStates={setInfoBoxesStates}
                 />
             </Canvas>
-
-            {/* {SPECIAL_OBJECTS.map((obj, index) => (
-                <InfoBox
-                    key={index}
-                    info={obj.info}
-                    link={obj.link}
-                    position={{ x: window.innerWidth / 2, y: window.innerHeight / 2 - 100 - index * 120 }}
-                    visible={infoBoxesStates[index]}
-                    onClose={() => {
-                        setInfoBoxesStates((prevStates) => {
-                            const newStates = [...prevStates];
-                            newStates[index] = false;
-                            return newStates;
-                        });
-                    }}
-                />
-            ))} */}
         </div>
     );
 }
