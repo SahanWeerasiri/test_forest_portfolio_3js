@@ -42,7 +42,7 @@ const Home = () => {
             <Canvas
                 camera={{
                     near: 0.1,
-                    far: 50, // Increased far plane
+                    far: 13, // Increased far plane
                     position: [0, 10, 20] // Optional: Set a better camera position
                 }}
                 style={{ display: 'block' }}
