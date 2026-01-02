@@ -15,6 +15,7 @@ import Gem from './Gem';
 import Snake2 from './Snake2';
 import Luna from './Luna';
 import DragonCave from './DragonCave';
+import Griffin from './Griffin';
 
 // Debug mode toggle
 const DEBUG_COLLISION = true;
@@ -197,6 +198,7 @@ const GroundGrass = ({ SPECIAL_OBJECTS, setFoxLocation, infoBoxesStates, setInfo
             <Snake1 position={[9.2, 0.15, -9.2]} scale={0.02} rotation={[0, -Math.PI / 4 * 3, 0]} />
             <Snake2 position={[-9.8, 0.6, -9.8]} scale={0.35} rotation={[0, -Math.PI / 4, 0]} />
             <Luna position={[-9, 0.5, 0]} scale={1.2} rotation={[0, Math.PI / 2, 0]} />
+            <Griffin position={[1.2, 0.6, 7]} scale={0.3} rotation={[0, Math.PI, 0]} />
             {/* InfoBox components - positioned relative to the scene */}
             {SPECIAL_OBJECTS.map((obj, index) => (
                 <InfoBox
