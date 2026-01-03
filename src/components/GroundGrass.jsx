@@ -86,6 +86,7 @@ const GroundGrass = ({ SPECIAL_OBJECTS, setFoxLocation, infoBoxesStates, setInfo
 
     // Touch events
     const handleTouchStart = (e) => {
+        if (window.__foxTouchActive) return;
         if (e.touches.length === 1) {
             touchState.current.dragging = true;
             touchState.current.lastX = e.touches[0].clientX;
@@ -99,6 +100,7 @@ const GroundGrass = ({ SPECIAL_OBJECTS, setFoxLocation, infoBoxesStates, setInfo
         }
     };
     const handleTouchMove = (e) => {
+        if (window.__foxTouchActive) return;
         if (e.touches.length === 1 && touchState.current.dragging) {
             const deltaX = e.touches[0].clientX - touchState.current.lastX;
             const deltaY = e.touches[0].clientY - touchState.current.lastY;
@@ -125,6 +127,7 @@ const GroundGrass = ({ SPECIAL_OBJECTS, setFoxLocation, infoBoxesStates, setInfo
         }
     };
     const handleTouchEnd = (e) => {
+        if (window.__foxTouchActive) return;
         touchState.current.dragging = false;
         touchState.current.pinchDist = null;
     };
