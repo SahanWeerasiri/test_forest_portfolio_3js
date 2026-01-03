@@ -33,35 +33,30 @@ const Fox = ({ SPECIAL_OBJECTS, setFoxLocation, ...props }) => {
     // }, [actions]);
 
     useEffect(() => {
-        const handleKeyDown = (e) => {
+        // Helper to move fox by direction
+        const moveFox = (direction, shift = false) => {
             if (!foxRef.current) return;
-
             let positionChanged = false;
-
-            const isArrow = ["ArrowUp", "ArrowDown", "ArrowLeft", "ArrowRight"].includes(e.key);
-            if (isArrow) {
-                if (e.shiftKey) {
-                    actionsRef.current['hit']?.play();
-                    stepRef.current = 0.04;
-                } else {
-                    actionsRef.current['walk']?.play();
-                    stepRef.current = 0.02;
-                }
+            if (shift) {
+                actionsRef.current['hit']?.play();
+                stepRef.current = 0.04;
+            } else {
+                actionsRef.current['walk']?.play();
+                stepRef.current = 0.02;
             }
-
             const rotateStep = Math.PI / 96;
             let nextX = foxRef.current.position.x;
             let nextZ = foxRef.current.position.z;
             const angle = foxRef.current.rotation.y;
-            if (e.key === 'ArrowUp') {
+            if (direction === 'up') {
                 nextX += Math.sin(angle) * stepRef.current;
                 nextZ += Math.cos(angle) * stepRef.current;
             }
-            if (e.key === 'ArrowDown') {
+            if (direction === 'down') {
                 nextX -= Math.sin(angle) * stepRef.current;
                 nextZ -= Math.cos(angle) * stepRef.current;
             }
-            // Collision detection: check if next position is too close to any special object
+            // Collision detection
             let blocked = false;
             for (const obj of SPECIAL_OBJECTS) {
                 if (obj.type === 'circle') {
@@ -86,31 +81,26 @@ const Fox = ({ SPECIAL_OBJECTS, setFoxLocation, ...props }) => {
                 }
             }
             if (!blocked) {
-                if (e.key === 'ArrowUp' || e.key === 'ArrowDown') {
+                if (direction === 'up' || direction === 'down') {
                     foxRef.current.position.x = nextX;
                     foxRef.current.position.z = nextZ;
                     positionChanged = true;
                 }
             }
-            if (e.key === 'ArrowLeft') {
+            if (direction === 'left') {
                 foxRef.current.rotation.y += rotateStep;
                 positionChanged = true;
             }
-            if (e.key === 'ArrowRight') {
+            if (direction === 'right') {
                 foxRef.current.rotation.y -= rotateStep;
                 positionChanged = true;
             }
-
-            // Only update fox location if changed and value is different
             if (positionChanged) {
                 const newPos = foxRef.current.position.clone();
-                // Only update if newPos is different from last
                 if (!lastFoxPosRef.current.equals(newPos)) {
-                    // Clear any pending timeout
                     if (updateTimeoutRef.current) {
                         clearTimeout(updateTimeoutRef.current);
                     }
-                    // Throttle the update to prevent infinite loops
                     updateTimeoutRef.current = setTimeout(() => {
                         setFoxLocation(newPos);
                         lastFoxPosRef.current.copy(newPos);
@@ -118,8 +108,14 @@ const Fox = ({ SPECIAL_OBJECTS, setFoxLocation, ...props }) => {
                     }, 10);
                 }
             }
-        }
+        };
 
+        // Keyboard
+        const handleKeyDown = (e) => {
+            if (["ArrowUp", "ArrowDown", "ArrowLeft", "ArrowRight"].includes(e.key)) {
+                moveFox(e.key.replace('Arrow', '').toLowerCase(), e.shiftKey);
+            }
+        };
         const handleKeyUp = (e) => {
             if (["ArrowUp", "ArrowDown", "ArrowLeft", "ArrowRight"].includes(e.key)) {
                 actionsRef.current['walk']?.stop();
@@ -128,12 +124,50 @@ const Fox = ({ SPECIAL_OBJECTS, setFoxLocation, ...props }) => {
         };
         window.addEventListener('keydown', handleKeyDown);
         window.addEventListener('keyup', handleKeyUp);
+
+        // Touch swipe
+        let touchStartX = null;
+        let touchStartY = null;
+        let touchStartTime = null;
+        const minSwipeDist = 30;
+        const maxSwipeTime = 500;
+        const handleTouchStart = (e) => {
+            if (e.touches.length === 1) {
+                touchStartX = e.touches[0].clientX;
+                touchStartY = e.touches[0].clientY;
+                touchStartTime = Date.now();
+            }
+        };
+        const handleTouchEnd = (e) => {
+            if (touchStartX === null || touchStartY === null) return;
+            const touch = e.changedTouches[0];
+            const dx = touch.clientX - touchStartX;
+            const dy = touch.clientY - touchStartY;
+            const dt = Date.now() - touchStartTime;
+            if (dt > maxSwipeTime) return;
+            if (Math.abs(dx) > Math.abs(dy) && Math.abs(dx) > minSwipeDist) {
+                // Horizontal swipe
+                if (dx > 0) moveFox('right');
+                else moveFox('left');
+            } else if (Math.abs(dy) > minSwipeDist) {
+                // Vertical swipe
+                if (dy > 0) moveFox('down');
+                else moveFox('up');
+            }
+            touchStartX = null;
+            touchStartY = null;
+            touchStartTime = null;
+        };
+        window.addEventListener('touchstart', handleTouchStart);
+        window.addEventListener('touchend', handleTouchEnd);
+
         return () => {
             window.removeEventListener('keydown', handleKeyDown);
             window.removeEventListener('keyup', handleKeyUp);
+            window.removeEventListener('touchstart', handleTouchStart);
+            window.removeEventListener('touchend', handleTouchEnd);
         };
-
-    }, []); // Remove actions dependency
+    }, []);
 
     return (
         <mesh ref={foxRef}>

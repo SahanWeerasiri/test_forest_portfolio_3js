@@ -55,6 +55,9 @@ const GroundGrass = ({ SPECIAL_OBJECTS, setFoxLocation, infoBoxesStates, setInfo
     fenceAdditionalPositions.push([-fenceRadius - 1.3, 0, fenceRadius + 1]);
     fenceAdditionalPositions.push([fenceRadius + 1.3, 0, fenceRadius + 1]);
 
+    // Touch drag and pinch zoom support
+    const touchState = useRef({ dragging: false, lastX: 0, lastY: 0, pinchDist: null, startScale: 1 });
+
     const handlePointerDown = (e) => {
         setIsDragging(true);
         setLastX(e.clientX);
@@ -81,17 +84,68 @@ const GroundGrass = ({ SPECIAL_OBJECTS, setFoxLocation, infoBoxesStates, setInfo
         }
     };
 
+    // Touch events
+    const handleTouchStart = (e) => {
+        if (e.touches.length === 1) {
+            touchState.current.dragging = true;
+            touchState.current.lastX = e.touches[0].clientX;
+            touchState.current.lastY = e.touches[0].clientY;
+        } else if (e.touches.length === 2) {
+            // Pinch zoom
+            const dx = e.touches[0].clientX - e.touches[1].clientX;
+            const dy = e.touches[0].clientY - e.touches[1].clientY;
+            touchState.current.pinchDist = Math.sqrt(dx * dx + dy * dy);
+            touchState.current.startScale = landRef.current ? landRef.current.scale.x : 1;
+        }
+    };
+    const handleTouchMove = (e) => {
+        if (e.touches.length === 1 && touchState.current.dragging) {
+            const deltaX = e.touches[0].clientX - touchState.current.lastX;
+            const deltaY = e.touches[0].clientY - touchState.current.lastY;
+            touchState.current.lastX = e.touches[0].clientX;
+            touchState.current.lastY = e.touches[0].clientY;
+            if (landRef.current) {
+                const newYRotation = landRef.current.rotation.y + deltaX * sensitivity;
+                landRef.current.rotation.y = newYRotation;
+                const newXRotation = landRef.current.rotation.x + deltaY * sensitivity;
+                if (0.15 < newXRotation && newXRotation < 1.1) {
+                    landRef.current.rotation.x = newXRotation;
+                }
+            }
+        } else if (e.touches.length === 2 && landRef.current) {
+            // Pinch zoom
+            const dx = e.touches[0].clientX - e.touches[1].clientX;
+            const dy = e.touches[0].clientY - e.touches[1].clientY;
+            const dist = Math.sqrt(dx * dx + dy * dy);
+            if (touchState.current.pinchDist) {
+                let scale = touchState.current.startScale * (dist / touchState.current.pinchDist);
+                scale = Math.max(1, Math.min(2, scale));
+                landRef.current.scale.set(scale, scale, scale);
+            }
+        }
+    };
+    const handleTouchEnd = (e) => {
+        touchState.current.dragging = false;
+        touchState.current.pinchDist = null;
+    };
+
     useEffect(() => {
         window.addEventListener('pointerdown', handlePointerDown);
         window.addEventListener('pointerup', handlePointerUp);
         window.addEventListener('pointermove', handlePointerMove);
         window.addEventListener('wheel', handleWheel);
+        window.addEventListener('touchstart', handleTouchStart);
+        window.addEventListener('touchmove', handleTouchMove);
+        window.addEventListener('touchend', handleTouchEnd);
 
         return () => {
             window.removeEventListener('pointerdown', handlePointerDown);
             window.removeEventListener('pointerup', handlePointerUp);
             window.removeEventListener('pointermove', handlePointerMove);
             window.removeEventListener('wheel', handleWheel);
+            window.removeEventListener('touchstart', handleTouchStart);
+            window.removeEventListener('touchmove', handleTouchMove);
+            window.removeEventListener('touchend', handleTouchEnd);
         };
     }, [isDragging]);
 
