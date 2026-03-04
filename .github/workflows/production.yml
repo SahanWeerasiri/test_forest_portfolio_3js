@@ -22,7 +22,9 @@ jobs:
                   docker push sahanlahiru/sahan:forest
                   docker logout
                   echo "Docker image pushed successfully"
-
-            - name: Cleanup SSH Key
-              if: always()
-              run: rm -f ~/.ssh/deploy_key
+            - name: Notify the deployhub - Add an issue in public repo using the current action token
+              run: |
+                  curl -X POST -H "Accept: application/vnd.github.v3+json" \
+                  -H "Authorization: token ${{github.token}}" \
+                  https://api.github.com/repos/sahanlahiru/deployhub/issues \
+                  -d '{"title":"New deployment for Forest Portfolio","body":"A new deployment has been triggered for the Forest Portfolio. Please check the latest changes and ensure everything is running smoothly."}'
