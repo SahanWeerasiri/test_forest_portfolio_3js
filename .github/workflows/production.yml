@@ -1,0 +1,28 @@
+name: Deploy Workflow
+on:
+    push:
+        branches:
+            - master
+    workflow_dispatch:
+jobs:
+    deploy:
+        runs-on: ubuntu-latest
+        steps:
+            - name: Checkout Repository
+              uses: actions/checkout@v2
+
+            - name: Build docker images for Forest Portfolio
+              run: |
+                  docker build -t forest-portfolio:latest .
+
+            - name: Build and push Forest image
+              run: |
+                  docker build -t sahanlahiru/sahan:forest .
+                  echo ${{ secrets.DOCKER_PASSWORD }} | docker login -u ${{ secrets.DOCKER_USERNAME }} --password-stdin
+                  docker push sahanlahiru/sahan:forest
+                  docker logout
+                  echo "Docker image pushed successfully"
+
+            - name: Cleanup SSH Key
+              if: always()
+              run: rm -f ~/.ssh/deploy_key
