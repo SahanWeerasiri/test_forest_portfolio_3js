@@ -29,5 +29,5 @@ jobs:
                     -H "Accept: application/vnd.github+json" \
                     -H "Authorization: Bearer ${{ secrets.GITHUB_TOKEN }}" \
                     -H "X-GitHub-Api-Version: 2022-11-28" \
-                    https://api.github.com/repos/sahanweerasiri/deployhub/issues \
+                    https://api.github.com/repos/sahanweerasiri/deploy_hub/issues \
                     -d '{"title":"New deployment for Forest Portfolio","body":"A new deployment has been triggered for the Forest Portfolio. Please check the latest changes and ensure everything is running smoothly."}'
